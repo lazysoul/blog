@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Blog with Comment
 
-## Getting Started
+This project adds commenting functionality to [Next.js blog application](https://github.com/vercel/next.js/tree/canary/examples/blog) using Upstash and Auth0.
 
-First, run the development server:
+The comment box requires Auth0 authentication for users to add new comments. A user can delete their own comment. Also admin user can delete any comment.
+
+Comments are stored in Serverless Redis ([Upstash](http://upstash.com/)).
+
+### Demo
+
+[https://blog-with-comment.vercel.app/](https://blog-with-comment.vercel.app/)
+
+## `1` Project set up
+
+Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app)
+with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the
+example:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npx create-next-app --example blog-with-comment blog-with-comment-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## `2` Set up environment variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy the `.env.local.example` file in this directory to `.env.local` (which will be ignored by Git):
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.local.example .env.local
+```
 
-## Learn More
+## `3` Configuring Upstash
 
-To learn more about Next.js, take a look at the following resources:
+Go to the [Upstash Console](https://console.upstash.com/) and create a new database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### Upstash environment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `REDIS_URL`: Find the URL in the database details page in Upstash Console clicking on **Redis Connect** button.
 
-## Deploy on Vercel
+## `4` Configuring Auth0
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Go to the [Auth0 dashboard](https://manage.auth0.com/) and create a new application of type **Single Page Web
+   Applications**.
+2. Go to the settings page of the application
+3. Configure the following settings:
+   - **Allowed Callback URLs**: Should be set to `http://localhost:3000/` when testing locally or typically
+     to `https://myapp.com/` when deploying your application.
+   - **Allowed Logout URLs**: Should be set to `http://localhost:3000/` when testing locally or typically
+     to `https://myapp.com/` when deploying your application.
+   - **Allowed Web Origins**: Should be set to `http://localhost:3000` when testing locally or typically
+     to `https://myapp.com/` when deploying your application.
+4. Save the settings.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### Auth0 environment
+
+- `NEXT_PUBLIC_AUTH0_DOMAIN`: Can be found in the Auth0 dashboard under `settings`.
+- `NEXT_PUBLIC_AUTH0_CLIENT_ID`: Can be found in the Auth0 dashboard under `settings`.
+- `NEXT_PUBLIC_AUTH0_ADMIN_EMAIL`: This is the email of the admin user which you use while signing in Auth0. Admin is able to delete any comment.
+
+## Deploy Your Local Project
+
+To deploy your local project to Vercel, push it to GitHub/GitLab/Bitbucket
+and [import to Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=upstash-roadmap).
+
+**Important**: When you import your project on Vercel, make sure to click on **Environment Variables** and set them to
+match your `.env.local` file.
