@@ -4,7 +4,7 @@ title: Markdown Basic
 excerpt: Markdown 기본 문법을 다룹니다.
 date: 2024-10-24
 categories: tools
-tags: tools, markdown
+tags: tools markdown
 ---
 
 ### Headings
