@@ -29,9 +29,9 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
     data.date = new Date().toISOString();
   }
 
-  const items: Post = {};
+  const items: Record<string, any> = {};
 
-  // Ensure only the minimal needed data is exposed
+  // Ensure the fields are in an array
   fields.forEach((field) => {
     if (field === "slug") {
       items[field] = realSlug;
@@ -63,6 +63,10 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
       items[field] = format(parsedDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx") as any;
     } else if (typeof data[field] !== "undefined") {
       items[field] = data[field];
+    }
+    if (field === "tags" && typeof data[field] === 'string') {
+      // Assuming tags are stored as a comma-separated string
+      items[field] = data[field].split(',').map(tag => tag.trim());
     }
   });
 

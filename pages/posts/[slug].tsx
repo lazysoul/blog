@@ -7,6 +7,18 @@ import { getAllPosts, getPostBySlug } from "../../lib/getPost";
 import markdownToHtml from "../../lib/markdownToHtml";
 import Head from "next/head";
 import { format } from 'date-fns';
+import Link from 'next/link';
+import { formatDate } from '../../lib/dateFormatter';
+
+// Add this type definition
+type Post = {
+  slug: string;
+  title: string;
+  excerpt?: string;
+  date: string;
+  content: string;
+  tags?: string[];
+};
 
 export default function PostPage({
   post,
@@ -28,24 +40,36 @@ export default function PostPage({
       ) : (
         <div>
           <article>
-            <header>
-              <h1 className="text-4xl font-bold">{post.title}</h1>
-              {post.excerpt ? (
-                <p className="mt-2 text-xl">{post.excerpt}</p>
-              ) : null}
-              <time className="flex mt-2 text-gray-400">
-                {format(new Date(post.date), 'MMMM d, yyyy')}
-              </time>
-            </header>
-
+            <h1 className="text-4xl font-bold">{post.title}</h1>
+            <p className="text-gray-500 mt-2">{formatDate(post.date)}</p>
+            {post.excerpt ? (
+              <p className="mt-2 text-xl">{post.excerpt}</p>
+            ) : null}
             <div
               className="prose mt-10"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
+            
+            {/* Updated tags section */}
+            {post.tags && post.tags.length > 0 && (
+              <div className="mt-10 pt-6 border-t border-gray-200">
+                <h2 className="text-2xl font-bold mb-4">Tags</h2>
+                <div className="flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <Link 
+                      key={tag} 
+                      href={`/tags/${tag}`}
+                      className="inline-block bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-sm font-semibold hover:bg-blue-200 transition-colors duration-200"
+                    >
+                      #{tag}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </article>
 
           <Comment />
-
         </div>
       )}
     </Container>
@@ -65,15 +89,25 @@ export async function getStaticProps({ params }: Params) {
     "excerpt",
     "date",
     "content",
+    "tags",
   ]);
   const content = await markdownToHtml(post.content || "");
+
+  // tags 처리를 더 안전하게 수정
+  let tags: string[] | undefined;
+  if (typeof post.tags === 'string') {
+    tags = post.tags.split(/\s+/).filter(Boolean);
+  } else if (Array.isArray(post.tags)) {
+    tags = post.tags.filter((tag): tag is string => typeof tag === 'string');
+  }
 
   return {
     props: {
       post: {
         ...post,
         content,
-      },
+        tags,
+      } as Post,
     },
   };
 }
