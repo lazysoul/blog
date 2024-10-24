@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { Comment } from "../interfaces/index";
+import type { Comment } from "../interfaces";
 import redis from "./redis";
 import clearUrl from "./clearUrl";
 

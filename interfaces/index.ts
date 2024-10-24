@@ -14,12 +14,11 @@ export type Comment = {
 };
 
 export type Post = {
-  slug: string; // slug를 필수 속성으로 변경
+  slug?: string;
   title?: string;
   author?: string;
   date?: Date;
   content?: string;
   excerpt?: string;
-  tags?: string[];
   [key: string]: any;
 };
