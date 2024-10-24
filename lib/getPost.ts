@@ -2,7 +2,6 @@ import type { Post } from "../interfaces";
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
-import { parseISO, parse, format } from 'date-fns';
 
 const postsDirectory = join(process.cwd(), "_posts");
 
@@ -39,29 +38,7 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
     if (field === "content") {
       items[field] = content;
     }
-    if (field === "date") {
-      // 다양한 날짜 형식 처리
-      const dateValue = data[field];
-      let parsedDate: Date;
-      if (typeof dateValue === 'string') {
-        try {
-          // ISO 형식 (예: "2014-01-01")
-          parsedDate = parseISO(dateValue);
-        } catch {
-          try {
-            // "YYYY-MM-DD" 형식
-            parsedDate = parse(dateValue, 'yyyy-MM-dd', new Date());
-          } catch {
-            console.error(`Invalid date format for ${slug}: ${dateValue}`);
-            parsedDate = new Date(); // 기본값으로 현재 날짜 사용
-          }
-        }
-      } else {
-        parsedDate = new Date(dateValue);
-      }
-      // Date 객체를 ISO 문자열로 변환
-      items[field] = format(parsedDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx") as any;
-    } else if (typeof data[field] !== "undefined") {
+    if (typeof data[field] !== "undefined") {
       items[field] = data[field];
     }
   });

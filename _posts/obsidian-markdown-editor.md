@@ -1,10 +1,7 @@
 ---
-layout: post
 title: 옵시디언 (Obsidian) Markown Editor
 excerpt: Obsidian은 개인의 사고 방식에 맞춰 적용할수 있는 Markdown 기반 노트 작성 도구입니다.
-date: 2024-10-24
-categories: tools
-tags: tools mac markdown obsidian
+date: "2024-10-24"
 ---
 
 <!-- ![[/images/obsidian-markdown-editor-01.png]] -->
