@@ -6,33 +6,23 @@ import Container from "../../components/container";
 import { getAllPosts, getPostBySlug } from "../../lib/getPost";
 import markdownToHtml from "../../lib/markdownToHtml";
 import Head from "next/head";
-import { format } from 'date-fns';
 import Link from 'next/link';
 import { formatDate } from '../../lib/dateFormatter';
-
-// Add this type definition
-type Post = {
-  slug: string;
-  title: string;
-  excerpt?: string;
-  date: string;
-  content: string;
-  tags?: string[];
-};
+import { Post } from '../../interfaces'; // Post 타입을 import
 
 export default function PostPage({
   post,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
 
-  if (!router.isFallback && !post?.slug) {
+  if (!router.isFallback && !post) {
     return <ErrorPage statusCode={404} />;
   }
 
   return (
     <Container>
       <Head>
-        <title>{post.title} | My awesome blog</title>
+        <title>{post.title || 'Untitled'} | My awesome blog</title>
       </Head>
 
       {router.isFallback ? (
@@ -40,17 +30,16 @@ export default function PostPage({
       ) : (
         <div>
           <article>
-            <h1 className="text-4xl font-bold">{post.title}</h1>
+            <h1 className="text-4xl font-bold">{post.title || 'Untitled'}</h1>
             <p className="text-gray-500 mt-2">{formatDate(post.date)}</p>
-            {post.excerpt ? (
+            {post.excerpt && (
               <p className="mt-2 text-xl">{post.excerpt}</p>
-            ) : null}
+            )}
             <div
               className="prose mt-10"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: post.content || '' }}
             />
             
-            {/* Updated tags section */}
             {post.tags && post.tags.length > 0 && (
               <div className="mt-10 pt-6 border-t border-gray-200">
                 <h2 className="text-2xl font-bold mb-4">Tags</h2>
@@ -116,13 +105,17 @@ export async function getStaticPaths() {
   const posts = getAllPosts(["slug"]);
 
   return {
-    paths: posts.map(({ slug }) => {
+    paths: posts.map((post) => {
+      if (!post.slug) {
+        console.warn('Post without slug:', post);
+        return null;
+      }
       return {
         params: {
-          slug,
+          slug: post.slug,
         },
       };
-    }),
+    }).filter((path): path is { params: { slug: string } } => path !== null),
     fallback: false,
   };
 }

@@ -1,4 +1,4 @@
-import type { Comment } from "../../interfaces";
+import type { Comment } from "../../interfaces/index";
 import distanceToNow from "../../lib/dateRelative";
 import { useAuth0 } from "@auth0/auth0-react";
 
