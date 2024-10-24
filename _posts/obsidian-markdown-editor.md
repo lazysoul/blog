@@ -4,7 +4,8 @@ excerpt: Obsidian은 개인의 사고 방식에 맞춰 적용할수 있는 Mar
 date: "2024-10-24"
 ---
 
-![[/images/obsidian-markdown-editor-01.png]]
+<!-- ![[/images/obsidian-markdown-editor-01.png]] -->
+![Obsidian Markdown Editor](/images/obsidian-markdown-editor-01.png)
 
 https://obsidian.md
 ## Obsidian: 유연한 사고를 위한 노트 앱
