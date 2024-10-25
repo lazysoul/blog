@@ -21,7 +21,7 @@ export default function TagPage({ posts, tag }: Props) {
   return (
     <Container>
       <Head>
-        <title>Posts tagged with {tag} | My awesome blog</title>
+        <title>{`Posts tagged with ${tag} | My awesome blog`}</title>
       </Head>
       <h1 className="text-4xl font-bold mb-8">Posts tagged with #{tag}</h1>
       <ul className="space-y-4">
@@ -41,7 +41,12 @@ export default function TagPage({ posts, tag }: Props) {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const tag = params?.tag as string;
   const allPosts = getAllPosts(['slug', 'title', 'date', 'tags']);
-  const posts = allPosts.filter((post) => post.tags?.includes(tag));
+  const posts = allPosts.filter((post) => {
+    if (typeof post.tags === 'string') {
+      return post.tags.split(', ').includes(tag);
+    }
+    return false;
+  });
 
   return {
     props: {
@@ -53,7 +58,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = getAllPosts(['tags']);
-  const tags = Array.from(new Set(posts.flatMap((post) => post.tags || [])));
+  const tags = Array.from(new Set(posts.flatMap((post) => {
+    if (typeof post.tags === 'string') {
+      return post.tags.split(', ');
+    }
+    return [];
+  })));
 
   return {
     paths: tags.map((tag) => ({

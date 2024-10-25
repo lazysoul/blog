@@ -1,7 +1,8 @@
 import type { InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import Container from "../../components/container";
-import distanceToNow from "../../lib/dateRelative";
+import { format } from 'date-fns';
+import { parseISO } from 'date-fns';
 import { getAllPosts } from "../../lib/getPost";
 
 export default function NotePage({
@@ -21,7 +22,7 @@ export default function NotePage({
             </Link>
             <p>{post.excerpt}</p>
             <div className="text-gray-400">
-              <time>{distanceToNow(new Date(post.date))}</time>
+              {/* <time dateTime={post.date.toISOString()}>{format(parseISO(post.date), 'LLLL d, yyyy')}</time> */}
             </div>
           </article>
         ))

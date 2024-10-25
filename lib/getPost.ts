@@ -2,6 +2,7 @@ import type { Post } from "../interfaces";
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
+import { parseISO, format } from 'date-fns'
 
 const postsDirectory = join(process.cwd(), "_posts");
 
@@ -28,9 +29,8 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
     data.date = new Date().toISOString();
   }
 
-  const items: Post = {};
+  const items: Record<string, string> = {};
 
-  // Ensure only the minimal needed data is exposed
   fields.forEach((field) => {
     if (field === "slug") {
       items[field] = realSlug;
@@ -38,7 +38,15 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
     if (field === "content") {
       items[field] = content;
     }
-    if (typeof data[field] !== "undefined") {
+    if (field === "date") {
+      // Date 객체를 ISO 문자열로 변환
+      items[field] = data[field].toISOString();
+    }
+    if (field === "tags" && data[field]) {
+      // 태그가 문자열이면 쉼표로 분리하여 배열로 변환, 이미 배열이면 그대로 사용
+      items[field] = typeof data[field] === 'string' ? data[field].split(',').map(tag => tag.trim()) : data[field];
+    }
+    if (typeof data[field] !== "undefined" && field !== "date") {
       items[field] = data[field];
     }
   });
