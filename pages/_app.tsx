@@ -1,5 +1,8 @@
 import "tailwindcss/tailwind.css";
 
+import '../styles/globals.css';
+import Layout from '../components/Layout';
+
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import Header from "../components/header";
@@ -31,9 +34,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
       <Header />
 
-      <main className="py-14">
-        <Component {...pageProps} />
-      </main>
+      <Layout>
+        <main className="py-14">
+          <Component {...pageProps} />
+        </main>
+      </Layout>
     </Auth0Provider>
   );
 }

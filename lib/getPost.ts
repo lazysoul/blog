@@ -6,6 +6,7 @@ import { parseISO, format } from 'date-fns'
 
 const postsDirectory = join(process.cwd(), "_posts");
 
+
 export function getPostSlugs() {
   return fs
     .readdirSync(postsDirectory)
@@ -54,6 +55,29 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
   return items;
 }
 
+
+export function getPostsByCategory(category?: string) {
+  const posts = getAllPosts(['slug', 'title', 'date', 'excerpt', 'categories']);
+  
+  if (!category) {
+    return posts;
+  }
+
+  return posts.filter(post => {
+    if (!post.categories) return false;
+    
+    if (typeof post.categories === 'string') {
+      return post.categories.split(',').map(cat => cat.trim()).includes(category);
+    }
+    
+    if (Array.isArray(post.categories)) {
+      return post.categories.includes(category);
+    }
+
+    return false;
+  });
+}
+
 export function getAllPosts(fields: string[] = []) {
   const slugs = getPostSlugs();
   const posts = slugs
@@ -61,4 +85,27 @@ export function getAllPosts(fields: string[] = []) {
     .filter((post): post is Post => post !== null)
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
   return posts;
+}
+
+export function getAllCategories(): string[] {
+  const posts = getAllPosts(['categories']);
+  const categoriesSet = new Set<string>();
+  
+  posts.forEach(post => {
+    if (post.categories) {
+      if (typeof post.categories === 'string') {
+        // 카테고리가 쉼표로 구분된 문자열인 경우
+        post.categories.split(',').forEach(category => 
+          categoriesSet.add(category.trim())
+        );
+      } else if (Array.isArray(post.categories)) {
+        // 카테고리가 이미 배열인 경우
+        post.categories.forEach(category => 
+          categoriesSet.add(category.trim())
+        );
+      }
+    }
+  });
+
+  return Array.from(categoriesSet);
 }
