@@ -1,9 +1,9 @@
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import Link from "next/link";
-import Container from "../../components/container";
-import { format, parseISO } from 'date-fns';
-import { getAllPosts, getPostsByCategory, getAllCategories } from "../../lib/getPost";
 import { useRouter } from 'next/router';
+import { format, parseISO } from 'date-fns';
+import Container from "../../components/container";
+import { getAllPosts, getAllCategories } from "../../lib/getPost";
 
 type Post = {
   slug: string;
@@ -26,48 +26,72 @@ export default function PostsPage({
 
   return (
     <Container>
-      <div className="mb-8">
-        <h2 className="text-2xl mb-4">Categories</h2>
-        <div className="flex flex-wrap gap-2">
-          <Link href="/posts" className={`px-3 py-1 rounded ${!currentCategory ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
-            All
-          </Link>
-          {categories.map(category => (
-            <Link 
-              key={category} 
-              href={`/posts?category=${category}`}
-              className={`px-3 py-1 rounded ${currentCategory === category ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-            >
-              {category}
-            </Link>
-          ))}
-        </div>
-      </div>
-      <h1 className="text-3xl mb-8">Posts {currentCategory ? `in ${currentCategory}` : ''}</h1>
-      {filteredPosts.length ? (
-        filteredPosts.map((post: Post) => (
-          <article key={post.slug} className="mb-10">
-            <Link
-              as={`/posts/${post.slug}`}
-              href="/posts/[slug]"
-              className="text-lg leading-6 font-bold"
-            >
-              {post.title}
-            </Link>
-            <p>{post.excerpt}</p>
-            <div className="text-gray-400">
-              <time dateTime={post.date}>{format(parseISO(post.date), 'LLLL d, yyyy')}</time>
-            </div>
-          </article>
-        ))
-      ) : (
-        <p>No blog posts found.</p>
-      )}
+      <CategoryList categories={categories} currentCategory={currentCategory} />
+      <h1 className="text-3xl mb-8">
+        Posts {currentCategory ? `in ${currentCategory}` : ''}
+      </h1>
+      <PostList posts={filteredPosts} />
     </Container>
   );
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+function CategoryList({ categories, currentCategory }: { categories: string[], currentCategory?: string }) {
+  return (
+    <div className="mb-8">
+      <h2 className="text-2xl mb-4">Categories</h2>
+      <div className="flex flex-wrap gap-2">
+        <CategoryLink href="/posts" isActive={!currentCategory}>All</CategoryLink>
+        {categories.map(category => (
+          <CategoryLink 
+            key={category} 
+            href={`/posts?category=${category}`}
+            isActive={currentCategory === category}
+          >
+            {category}
+          </CategoryLink>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CategoryLink({ href, isActive, children }: { href: string, isActive: boolean, children: React.ReactNode }) {
+  return (
+    <Link 
+      href={href}
+      className={`px-3 py-1 rounded ${isActive ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+    >
+      {children}
+    </Link>
+  );
+}
+
+function PostList({ posts }: { posts: Post[] }) {
+  return posts.length ? (
+    <>
+      {posts.map((post: Post) => (
+        <article key={post.slug} className="mb-10">
+          <Link
+            href={`/posts/${post.slug}`}
+            className="text-lg leading-6 font-bold"
+          >
+            {post.title}
+          </Link>
+          <p>{post.excerpt}</p>
+          <div className="text-gray-400">
+            <time dateTime={post.date}>
+              {format(parseISO(post.date), 'LLLL d, yyyy')}
+            </time>
+          </div>
+        </article>
+      ))}
+    </>
+  ) : (
+    <p>No blog posts found.</p>
+  );
+}
+
+export const getStaticProps: GetStaticProps = async () => {
   const categories = getAllCategories();
   const allPosts = getAllPosts(["slug", "title", "excerpt", "date", "categories"]);
 

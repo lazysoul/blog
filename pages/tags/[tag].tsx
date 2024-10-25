@@ -41,34 +41,23 @@ export default function TagPage({ posts, tag }: Props) {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const tag = params?.tag as string;
   const allPosts = getAllPosts(['slug', 'title', 'date', 'tags']);
-  const posts = allPosts.filter((post) => {
-    if (typeof post.tags === 'string') {
-      return post.tags.split(', ').includes(tag);
-    }
-    return false;
-  });
+  const posts = allPosts.filter((post) => 
+    typeof post.tags === 'string' && post.tags.split(', ').includes(tag)
+  );
 
-  return {
-    props: {
-      posts,
-      tag,
-    },
-  };
+  return { props: { posts, tag } };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = getAllPosts(['tags']);
-  const tags = Array.from(new Set(posts.flatMap((post) => {
-    if (typeof post.tags === 'string') {
-      return post.tags.split(', ');
-    }
-    return [];
-  })));
+  const tags = Array.from(new Set(
+    posts.flatMap((post) => 
+      typeof post.tags === 'string' ? post.tags.split(', ') : []
+    )
+  ));
 
   return {
-    paths: tags.map((tag) => ({
-      params: { tag },
-    })),
+    paths: tags.map((tag) => ({ params: { tag } })),
     fallback: false,
   };
 };
