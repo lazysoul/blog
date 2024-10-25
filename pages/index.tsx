@@ -31,7 +31,7 @@ function HomePage() {
 
         <div className="space-y-6 text-lg text-gray-700">
           <p>
-            '게으른 영혼'이라는 아이디처럼, 저는 느림의 가치를 소중히 여기며 개발에 임합니다. 
+            &lsquo;게으른 영혼&rsquo;이라는 아이디처럼, 저는 느림의 가치를 소중히 여기며 개발에 임합니다. 
             새로운 기술과 방법을 배우는 것을 즐기며, 다양한 시도를 통해 얻은 경험과 통찰을 
             다른 개발자들과 나누고자 합니다.
           </p>
@@ -39,9 +39,9 @@ function HomePage() {
             천천히, 하지만 꾸준히 성장하는 개발자의 여정을 함께 나누겠습니다.
           </p>
           <p className="italic text-gray-600">
-            Hi, I'm a mobile developer at WhaTap. Like my username 'lazysoul', 
+            Hi, I&apos;m a mobile developer at WhaTap. Like my username &lsquo;lazysoul&rsquo;, 
             I value the beauty of taking things slowly in development. I enjoy learning 
-            new technologies and methodologies, and I'd like to share the insights and 
+            new technologies and methodologies, and I&apos;d like to share the insights and 
             experiences gained through various experiments with other developers. 
             Let me share my journey as a developer who grows steadily, albeit slowly.
           </p>

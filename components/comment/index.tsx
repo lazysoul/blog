@@ -21,11 +21,14 @@ const Comment: React.FC = () => {
     script.setAttribute('data-lang', 'ko');
     script.setAttribute('crossorigin', 'anonymous');
 
+    // Capture the current value of the ref
+    const currentRef = commentRef.current;
 
-    commentRef.current?.appendChild(script);
+    currentRef?.appendChild(script);
 
     return () => {
-      commentRef.current?.removeChild(script);
+      // Use the captured value in the cleanup function
+      currentRef?.removeChild(script);
     };
   }, []);
 
