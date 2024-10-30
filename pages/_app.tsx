@@ -1,6 +1,7 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { Auth0Provider } from "@auth0/auth0-react";
+import Script from 'next/script';
 
 import "tailwindcss/tailwind.css";
 import '../styles/globals.css';
@@ -30,6 +31,23 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:description" content={META_DESCRIPTION} />
         <meta property="og:image" content={`${SITE_URL}lazysoul-tortoise.png`} />
       </Head>
+
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-XVKFQF478G"
+      />
+      <Script
+        id="google-analytics"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-XVKFQF478G');
+          `,
+        }}
+      />
 
       <Header />
       <Layout>
