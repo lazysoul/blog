@@ -6,8 +6,7 @@ date: 2024-10-24
 categories: tools
 tags: tools, mac, markdown, obsidian
 ---
-
-<!-- ![[/images/obsidian-markdown-editor-01.png]] -->
+![[angry-ip-scanner-01.png]]
 ![Obsidian Markdown Editor](/images/obsidian-markdown-editor-01.png)
 
 [https://obsidian.md](https://obsidian.md)
