@@ -2,11 +2,11 @@ import Link from 'next/link';
 
 const Sidebar = () => {
   return (
-    <aside className="flex min-h-screen bg-white p-6 pt-18">
+    <aside className="hidden md:block w-48 min-h-screen bg-white p-6 pt-52">
       <nav>
         <ul className="space-y-2">
           <li>
-            <Link href="/" className="text-gray-700 hover:text-gray-900">
+            <Link href="/posts" className="text-gray-700 hover:text-gray-900">
               All
             </Link>
           </li>

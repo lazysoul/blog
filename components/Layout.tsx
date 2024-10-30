@@ -2,9 +2,9 @@ import Sidebar from './Sidebar';
 
 const Layout = ({ children }) => {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen">
       <Sidebar />
-      <main className="flex-grow">
+      <main className="flex-1 w-full px-4 md:px-6">
         {children}
       </main>
     </div>
