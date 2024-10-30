@@ -1,6 +1,7 @@
 import Container from "../components/container";
 import Image from "next/image";
 import Head from "next/head";
+import Link from "next/link";
 
 function HomePage() {
   return (
@@ -14,14 +15,17 @@ function HomePage() {
             안녕하세요, 게으른 영혼입니다
           </h1>
           <p className="text-xl text-gray-600">
-            WhaTap에서 모바일 개발을 담당하는 개발자입니다
+            <Link href="https://whatap.io" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline">
+              WhaTap
+            </Link>
+            에서 모바일 개발을 담당하는 개발자입니다
           </p>
         </div>
 
         <div className="mb-12">
           <Image
             src="/main.png"
-            alt="my desk"
+            alt="Let's just have fun"
             width={1920}
             height={1280}
             layout="responsive"
@@ -39,9 +43,9 @@ function HomePage() {
             천천히, 하지만 꾸준히 성장하는 개발자의 여정을 함께 나누겠습니다.
           </p>
           <p className="italic text-gray-600">
-            Hi, I&apos;m a mobile developer at WhaTap. Like my username &lsquo;lazysoul&rsquo;, 
-            I value the beauty of taking things slowly in development. I enjoy learning 
-            new technologies and methodologies, and I&apos;d like to share the insights and 
+            Hi, I&apos;m a mobile developer at <Link href="https://whatap.io" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline">WhaTap</Link>. 
+            Like my username &lsquo;lazysoul&rsquo;, I value the beauty of taking things slowly in development. 
+            I enjoy learning new technologies and methodologies, and I&apos;d like to share the insights and 
             experiences gained through various experiments with other developers. 
             Let me share my journey as a developer who grows steadily, albeit slowly.
           </p>

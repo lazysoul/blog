@@ -162,6 +162,8 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "8209d3d3ca3ac7d1",
-  "lastOpenFiles": []
+  "active": "6732936637f738d1",
+  "lastOpenFiles": [
+    "scripts/copyImages.js"
+  ]
 }
