@@ -22,14 +22,14 @@ function HomePage() {
           </p>
         </div>
 
-        <div className="mb-12">
+        <div className="mb-12 relative aspect-[16/9]">
           <Image
             src="/main.png"
             alt="Let's just have fun"
-            width={1920}
-            height={1280}
-            layout="responsive"
-            className="rounded-lg shadow-lg"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+            priority
+            className="rounded-lg shadow-lg object-cover"
           />
         </div>
 

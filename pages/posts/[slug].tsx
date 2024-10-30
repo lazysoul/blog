@@ -6,6 +6,8 @@ import Container from "../../components/container";
 import distanceToNow from "../../lib/dateRelative";
 import { getAllPosts, getPostBySlug } from "../../lib/getPost";
 import markdownToHtml from "../../lib/markdownToHtml";
+import Comment from "../../components/comment";
+
 import Head from "next/head";
 import Link from 'next/link';
 import { useMemo } from 'react';
@@ -74,6 +76,11 @@ export default function PostPage({
             )}
 
           </article>
+
+
+          <Comment />
+
+
 
         </div>
       )}
