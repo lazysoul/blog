@@ -14,8 +14,8 @@ type Post = {
 };
 
 export default function PostsPage({
-  posts,
-  categories,
+  posts = [],
+  categories = [],
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
   const currentCategory = router.query.category as string | undefined;
@@ -27,7 +27,7 @@ export default function PostsPage({
   return (
     <Container>
       <CategoryList categories={categories} currentCategory={currentCategory} />
-      <h1 className="text-3xl mb-8">
+      <h1 className="text-xl font-medium mb-6 text-gray-700">
         Posts {currentCategory ? `in ${currentCategory}` : ''}
       </h1>
       <PostList posts={filteredPosts} />
@@ -35,13 +35,13 @@ export default function PostsPage({
   );
 }
 
-function CategoryList({ categories, currentCategory }: { categories: string[], currentCategory?: string }) {
+function CategoryList({ categories = [], currentCategory }: { categories: string[], currentCategory?: string }) {
   return (
     <div className="mb-8">
-      <h2 className="text-2xl mb-4">Categories</h2>
+      <h2 className="text-xl font-medium mb-6 text-gray-700">Categories</h2>
       <div className="flex flex-wrap gap-2">
         <CategoryLink href="/posts" isActive={!currentCategory}>All</CategoryLink>
-        {categories.map(category => (
+        {categories?.map(category => (
           <CategoryLink 
             key={category} 
             href={`/posts?category=${category}`}
@@ -92,8 +92,8 @@ function PostList({ posts }: { posts: Post[] }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const categories = getAllCategories();
-  const allPosts = getAllPosts(["slug", "title", "excerpt", "date", "categories"]);
+  const categories = getAllCategories() || [];
+  const allPosts = getAllPosts(["slug", "title", "excerpt", "date", "categories"]) || [];
 
   return {
     props: { 
