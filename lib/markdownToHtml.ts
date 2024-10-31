@@ -11,7 +11,11 @@ function rehypeCopyButton() {
   return (tree) => {
     visit(tree, "element", (node) => {
       if (node.tagName === "pre" && node.children[0]?.tagName === "code") {
-        const codeContent = (node.children[0] as any).children[0]?.value || '';
+        // Get the full code content by joining all text nodes
+        const codeNode = node.children[0] as Element;
+        const codeContent = codeNode.children
+          .map(child => (child as any).value || '')
+          .join('');
         
         node.properties.className = (node.properties.className || []).concat("code-block");
         node.properties['data-code'] = codeContent;

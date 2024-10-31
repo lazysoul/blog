@@ -11,11 +11,23 @@ export default function CopyButton() {
       const pre = button.closest('pre');
       if (!pre) return;
       
-      const code = pre.innerText
+      const code = pre.innerText.replace(/^Copy\n/, '');
       if (!code) return;
 
       try {
-        await navigator.clipboard.writeText(code);
+        // Try modern clipboard API first
+        try {
+          await navigator.clipboard.writeText(code);
+        } catch {
+          // Fallback to execCommand
+          const textarea = document.createElement('textarea');
+          textarea.value = code;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+        }
+
         button.textContent = 'Copied!';
         setTimeout(() => {
           button.textContent = 'Copy';
