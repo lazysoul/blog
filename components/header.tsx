@@ -4,6 +4,8 @@ import Container from "../components/container";
 export default function Header() {
   return (
     <header className="py-6">
+  <script src="/copyButton.js" defer></script>
+
       <Container>
         <div className="flex flex-col space-y-4">
           <div className="flex justify-between items-center">
@@ -22,6 +24,10 @@ export default function Header() {
               <Link href="/" className="hover:text-blue-600 transition-colors">Home</Link>
               <Link href="/posts" className="hover:text-blue-600 transition-colors">Posts</Link>
               <Link href="/about" className="hover:text-blue-600 transition-colors">About</Link>
+
+
+
+              
             </nav>
           </div>
         </div>

@@ -11,6 +11,7 @@ import Comment from "../../components/comment";
 import Head from "next/head";
 import Link from 'next/link';
 import { useMemo } from 'react';
+import CopyButton from '../../components/CopyButton';
 
 
 export default function PostPage({
@@ -41,13 +42,14 @@ export default function PostPage({
       ) : (
         <div>
           <article>
+            <CopyButton />
             <header>
               <h1 className="text-4xl font-bold">{post.title}</h1>
               {post.excerpt ? (
                 <p className="mt-2 text-xl">{post.excerpt}</p>
               ) : null}
               <time className="flex mt-2 text-gray-400">
-                {distanceToNow(new Date(post.date))}
+                {post.date && distanceToNow(new Date(post.date))}
               </time>
             </header>
 
@@ -95,14 +97,15 @@ type Params = {
 };
 
 export async function getStaticProps({ params }: Params) {
-  const post: Post = getPostBySlug(params.slug, [
+  const post = getPostBySlug(params.slug, [
     "slug",
     "title",
     "excerpt",
     "date",
     "content",
     "tags",
-  ]);
+  ]) as Post;
+
   const content = await markdownToHtml(post.content || "");
 
   return {

@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -13,15 +17,24 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
   },
   "include": [
-    "next-env.d.ts",
-    "remark-html.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "next-env.d.ts",
+    "postcss.config.js",
+    "remark-html.d.ts",
     "tailwind.config.js",
-    "postcss.config.js"
-  ],
-  "exclude": ["node_modules"]
+    ".next/types/**/*.ts"
+, "public/copyButton.js"  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

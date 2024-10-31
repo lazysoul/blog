@@ -7,6 +7,9 @@ export default async function fetchComment(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  if (!req.headers.referer) {
+    return res.status(400).json({ error: 'Referer header is required' });
+  }
   const url = clearUrl(req.headers.referer);
 
   if (!redis) {

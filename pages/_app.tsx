@@ -75,10 +75,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <MetaTags />
       <GoogleAnalytics />
       <Header />
-      <Layout>
-        <main className="py-14">
-          <Head>
-            <Script
+      {/* <Script
               id="copy-code"
               strategy="afterInteractive"
             >
@@ -97,8 +94,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                   }
                 }
               `}
-            </Script>
-          </Head>
+            </Script> */}
+      <Layout>
+        <main className="py-14">
+          {/* <Head>
+          </Head> */}
           <Component {...pageProps} />
         </main>
       </Layout>

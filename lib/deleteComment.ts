@@ -8,6 +8,9 @@ export default async function deleteComments(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  if (!req.headers.referer) {
+    return res.status(400).json({ error: 'Referer header is required' });
+  }
   const url = clearUrl(req.headers.referer);
   const { comment }: { url: string; comment: Comment } = req.body;
   const { authorization } = req.headers;

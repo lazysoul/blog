@@ -9,6 +9,9 @@ export default async function createComments(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  if (!req.headers.referer) {
+    return res.status(400).json({ error: 'Referer header is required' });
+  }
   const url = clearUrl(req.headers.referer);
   const { text } = req.body;
   const { authorization } = req.headers;
