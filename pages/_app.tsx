@@ -5,6 +5,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 
 import "tailwindcss/tailwind.css";
 import '../styles/globals.css';
+import 'highlight.js/styles/github-dark.css';
 
 import Layout from '../components/Layout';
 import Header from "../components/header";
@@ -76,6 +77,28 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Header />
       <Layout>
         <main className="py-14">
+          <Head>
+            <Script
+              id="copy-code"
+              strategy="afterInteractive"
+            >
+              {`
+                function copyCode(button) {
+                  const code = button.getAttribute('data-code');
+                  if (code) {
+                    navigator.clipboard.writeText(code).then(() => {
+                      button.textContent = 'Copied!';
+                      button.classList.add('copied');
+                      setTimeout(() => {
+                        button.textContent = 'Copy';
+                        button.classList.remove('copied');
+                      }, 2000);
+                    });
+                  }
+                }
+              `}
+            </Script>
+          </Head>
           <Component {...pageProps} />
         </main>
       </Layout>
