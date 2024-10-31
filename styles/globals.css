@@ -8,61 +8,45 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-/* 코드 블록 기본 스타일 */
-pre code.hljs {
-  padding: 1em;
-  border-radius: 0.5rem;
-  margin: 1em 0;
-}
-
+/* 코드 블록 스타일링 */
 .hljs {
-  background: #1e1e1e;
+  background: #2c2929;
   color: #dcdcdc;
 }
 
-/* 코드 블록 래퍼 및 복사 버튼 */
-.code-block-wrapper {
-  position: relative;
-}
-
-.code-block-wrapper pre {
+.code-block {
   margin: 0;
-  padding: 1rem;
-  background-color: #1e1e1e;
-  border: 1px solid #333;
-  border-radius: 0.5rem;
+  padding: 0;
+  background-color: #f3f4f6;
   overflow-x: auto;
 }
 
+pre {
+  position: relative !important;
+}
+
+/* 복사 버튼 스타일링 */
 .copy-button {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
   padding: 0.25rem 0.5rem;
-  background: #2d2d2d;
-  border: 1px solid #444;
-  border-radius: 0.25rem;
+  background-color: #2d2d2d;
   color: #fff;
-  font-size: 0.875rem;
+  border: 1px solid #444;
+  border-radius: 4px;
   cursor: pointer;
+  font-size: 0.875rem;
+  z-index: 10;
   transition: all 0.2s;
 }
 
 .copy-button:hover {
-  background: #444;
+  background-color: #3d3d3d;
 }
 
 .copy-button.copied {
   background-color: #22c55e;
-  opacity: 1;
-}
-
-/* 인라인 코드 스타일 */
-:not(pre) > code {
-  padding: 0.2em 0.4em;
-  font-size: 0.9em;
-  background-color: rgba(175, 184, 193, 0.2);
-  border-radius: 0.25rem;
 }
 
 /* 마크다운 컨텐츠 스타일 */
@@ -73,7 +57,6 @@ pre code.hljs {
     margin-right: auto;
   }
 
-  /* 마크다운 코드 블록 */
   .markdown-content pre {
     padding: none;
     border-radius: none;
@@ -81,7 +64,6 @@ pre code.hljs {
     overflow-x: auto;
   }
 
-  /* 마크다운 인라인 코드 */
   .markdown-content code:not(pre code) {
     padding: 0.1rem 0.2rem;
     border-radius: 0.25rem;
@@ -91,7 +73,6 @@ pre code.hljs {
     font-size: 0.875rem;
   }
 
-  /* 마크다운 링크 */
   .markdown-content a {
     color: rgb(37, 99, 235);
     transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -101,14 +82,12 @@ pre code.hljs {
     color: rgb(30, 64, 175);
   }
 
-  /* 마크다운 이미지 */
   .markdown-content img {
     border-radius: 0.5rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
                 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
 
-  /* 마크다운 테이블 */
   .markdown-content table {
     width: 100%;
     border-collapse: collapse;
@@ -123,30 +102,4 @@ pre code.hljs {
   .markdown-content th {
     background-color: #f3f4f6;
   }
-}
-
-.code-block-wrapper {
-  position: relative;
-}
-
-.copy-button {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  background-color: #2d2d2d;
-  color: #fff;
-  border: 1px solid #444;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.875rem;
-  z-index: 10;
-}
-
-.copy-button:hover {
-  background-color: #3d3d3d;
-}
-
-pre {
-  position: relative !important;
 }

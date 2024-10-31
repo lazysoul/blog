@@ -1,5 +1,4 @@
 import Container from "../components/container";
-import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";

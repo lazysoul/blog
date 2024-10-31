@@ -30,7 +30,7 @@ tags: tools, markdown
 **This text is bold** 
 ```
 
-__This text is also bold__`
+**This text is also bold**
 
 ### Italic
 
@@ -38,7 +38,7 @@ __This text is also bold__`
 *This text is italic*
 ```
 
-_This text is also italic_
+*This text is also italic*
 
 ### Bold and Italic
 
@@ -46,7 +46,7 @@ _This text is also italic_
 ***This text is bold and italic***
 ```
 
-___This text is bold and italic___
+***This text is bold and italic***
 
 ### Lists
 
@@ -114,19 +114,26 @@ This is a code block with backtick
 ```
 ~~~
 
+
 ```
 This is a code block with backtick
 ```
 
+  
+<br/>
+<br/>
+  
 ```
 ~~~
 This is a code block with tilde
 ~~~
 ```
 
+
 ~~~
 This is a code block with tilde
 ~~~
+
 
 ### Horizontal Line
 

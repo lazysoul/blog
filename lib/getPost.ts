@@ -2,7 +2,6 @@ import type { Post } from "../interfaces";
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
-import { parseISO, format } from 'date-fns'
 
 const postsDirectory = join(process.cwd(), "_posts");
 
@@ -16,7 +15,7 @@ export function getPostSlugs() {
 export function getPostBySlug(slug: string, fields: string[] = []) {
   const realSlug = slug.replace(/\.md$/, "");
   const fullPath = join(postsDirectory, `${realSlug}.md`);
-  
+
   // 파일이 존재하고 .md 확장자인지 확인
   if (!fs.existsSync(fullPath) || !fullPath.endsWith('.md')) {
     return null;
@@ -58,18 +57,18 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
 
 export function getPostsByCategory(category?: string) {
   const posts = getAllPosts(['slug', 'title', 'date', 'excerpt', 'categories']);
-  
+
   if (!category) {
     return posts;
   }
 
   return posts.filter(post => {
     if (!post.categories) return false;
-    
+
     if (typeof post.categories === 'string') {
       return post.categories.split(',').map(cat => cat.trim()).includes(category);
     }
-    
+
     if (Array.isArray(post.categories)) {
       return post.categories.includes(category);
     }
@@ -93,17 +92,17 @@ export function getAllPosts(fields: string[] = []) {
 export function getAllCategories(): string[] {
   const posts = getAllPosts(['categories']);
   const categoriesSet = new Set<string>();
-  
+
   posts.forEach(post => {
     if (post.categories) {
       if (typeof post.categories === 'string') {
         // 카테고리가 쉼표로 구분된 문자열인 경우
-        post.categories.split(',').forEach(category => 
+        post.categories.split(',').forEach(category =>
           categoriesSet.add(category.trim())
         );
       } else if (Array.isArray(post.categories)) {
         // 카테고리가 이미 배열인 경우
-        post.categories.forEach(category => 
+        post.categories.forEach(category =>
           categoriesSet.add(category.trim())
         );
       }
